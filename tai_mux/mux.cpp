@@ -289,6 +289,7 @@ void Multiplexier::notify(notification_context* ctx, tai_object_id_t real_oid, u
         }
         tai_alloc_info_t info;
         info.reference = &src;
+        std::memset(&dst, 0, sizeof(tai_attribute_t));
         dst.id = src.id;
 
         if ( tai_metadata_alloc_attr_value(meta, &dst, &info) != 0 ) {
@@ -346,7 +347,7 @@ tai_status_t Multiplexier::set_attributes( std::function<tai_status_t(ModuleAdap
             goto err;
         }
 
-        tai_attribute_t attr;
+        tai_attribute_t attr = {0};
         attr.id = attr_list[i].id;
         info.reference = &attr_list[i];
         if ( tai_metadata_alloc_attr_value(meta, &attr, &info) != 0 ) {
